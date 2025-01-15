@@ -1,5 +1,5 @@
 services:
-  - name: laravel-app
+  - name: event_management
     type: web
     env: php
     plan: free
@@ -35,6 +35,6 @@ services:
 
 databases:
   - name: event_management
-    type: mysql
+    type: pserv
     plan: free
     region: oregon
