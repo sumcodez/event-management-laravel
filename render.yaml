@@ -35,6 +35,5 @@ services:
 
 databases:
   - name: event_management
-    type: pserv
     plan: free
     region: oregon
