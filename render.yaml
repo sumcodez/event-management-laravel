@@ -34,7 +34,7 @@ services:
     region: oregon
 
 databases:
-  - name: laravel-mysql
+  - name: event_management
     type: mysql
     plan: free
     region: oregon
