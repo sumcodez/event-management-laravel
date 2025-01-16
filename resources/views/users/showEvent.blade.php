@@ -93,9 +93,9 @@
       @endif
     </p>
 
-    @if(session('success'))
+    {{-- @if(session('success'))
       <p class="flash-message">{{ session('success') }}</p>
-    @endif
+    @endif --}}
 
     @if($isRegistered)
       <p class="already-registered">You are already registered for this event.</p>

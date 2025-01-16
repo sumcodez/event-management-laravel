@@ -168,8 +168,8 @@
         <h1>Event Management System</h1>
         <p class="subtext">Prod by BitPastel</p>
         <div class="buttons">
-            <button><a href="{{ route('login') }}">Get Started</a></button>
-            <button><a href="{{ route('register') }}">Sign Up</a></button>
+            <a href="{{ route('login') }}"><button>Get Started</button></a>
+            <a href="{{ route('register') }}"><button>Sign Up</button></a>
         </div>
     </div>
 
