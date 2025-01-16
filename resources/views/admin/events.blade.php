@@ -249,7 +249,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Example logic for title uniqueness (needs backend validation)
+    // logic for title uniqueness (needs backend validation)
     const titleInputs = document.querySelectorAll('#event_title, #event_title_{{ $event->id }}');
     const titleError = document.querySelectorAll('.title-error');
 
@@ -281,8 +281,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
-
-
 
 </script>
 

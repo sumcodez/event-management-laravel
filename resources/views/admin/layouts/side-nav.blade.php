@@ -23,7 +23,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="{{ route('admin.dashboard') }}" class="nav-link">
+            <a href="{{ route('admin.dashboard') }}" class="nav-link {{ Request::routeIs('admin.dashboard') ? 'active' : '' }}">
               <i class="fa-solid fa-gauge"></i>
               <p style="margin-left: 10px">
                 Dashboard
@@ -31,7 +31,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ route('admin.venues') }}" class="nav-link">
+            <a href="{{ route('admin.venues') }}" class="nav-link {{ Request::routeIs('admin.venues') ? 'active' : '' }}">
               <i class="fa-solid fa-clipboard"></i>
               <p style="margin-left: 10px">
                 Venue Management
@@ -39,7 +39,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ route('admin.events') }}" class="nav-link">
+            <a href="{{ route('admin.events') }}" class="nav-link {{ Request::routeIs('admin.events') ? 'active' : '' }}">
               <i class="fa-regular fa-calendar-days"></i>
               <p style="margin-left: 10px">
                 Events

@@ -13,16 +13,61 @@
   <link rel="stylesheet" href="{{ asset ('adminLTE/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset ('adminLTE/dist/css/adminlte.min.css') }}">
+
+  <style>
+    /* Toast message styles */
+    .toast {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #F44336; /* Red for error */
+        color: white;
+        padding: 15px;
+        border-radius: 5px;
+        font-size: 1rem;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+        z-index: 9999;
+    }
+
+    .toast.success {
+        background-color: #4CAF50; /* Green for success */
+    }
+
+    .toast.show {
+        opacity: 1;
+    }
+    
+</style>
+
 </head>
 <body class="hold-transition login-page">
+
+        <!-- Display success message -->
+        @if(session('success'))
+        <div id="success-toast" class="toast success">
+            {{ session('success') }}
+        </div>
+        @endif
+    
+        <!-- Display validation errors -->
+        @if ($errors->any())
+            <div id="error-toast" class="toast">
+                @foreach ($errors->all() as $error)
+                    <p>{{ $error }}</p>
+                @endforeach
+            </div>
+        @endif
+
 <div class="login-box">
   <div class="login-logo">
-    <a href="../../index2.html"><b>Event</b>Management</a>
+    <a href="#"><b>Event</b>Management</a>
   </div>
   <!-- /.login-logo -->
   <div class="card">
     <div class="card-body login-card-body">
-      <p class="login-box-msg">Sign in to start your session</p>
+      <p class="login-box-msg">Sign in to access your dashboard</p>
 
       <form action="{{ route('admin.login.submit') }}" method="post">
         @csrf <!-- CSRF token -->
@@ -50,9 +95,9 @@
      </form>
     
 
-      <p class="mb-0" style="margin-left: 70px;">
+      {{-- <p class="mb-0" style="margin-left: 70px;">
         <a href="register.html" class="text-center">Register a new membership</a>
-      </p>
+      </p> --}}
     </div>
     <!-- /.login-card-body -->
   </div>
@@ -65,5 +110,34 @@
 <script src="{{ asset ('adminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset ('adminLTE/dist/js/adminlte.min.js') }}"></script>
+
+<script>
+  // Show toast message for success
+  @if(session('success'))
+      document.addEventListener("DOMContentLoaded", function() {
+          const successToast = document.getElementById('success-toast');
+          successToast.classList.add('show');
+
+          // Hide the success toast message after 5 seconds
+          setTimeout(function() {
+              successToast.classList.remove('show');
+          }, 5000);
+      });
+  @endif
+
+  // Show toast message for validation errors
+  @if ($errors->any())
+      document.addEventListener("DOMContentLoaded", function() {
+          const errorToast = document.getElementById('error-toast');
+          errorToast.classList.add('show');
+
+          // Hide the error toast message after 5 seconds
+          setTimeout(function() {
+              errorToast.classList.remove('show');
+          }, 5000);
+      });
+  @endif
+</script>
+
 </body>
 </html>

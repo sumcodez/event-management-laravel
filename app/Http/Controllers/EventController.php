@@ -70,6 +70,15 @@ class EventController extends Controller
             'date' => 'required|date|after_or_equal:today',
             'time' => 'required',
             'venue_id' => 'required|exists:venues,id',  // Ensure the venue_id exists in the venues table
+        ],[
+            'title.required' => 'The title field is required.',
+            'title.unique' => 'An event with this title already exists for the selected date and venue.',
+            'date.required' => 'The date field is required.',
+            'date.date' => 'The date must be a valid date.',
+            'date.after_or_equal' => 'The event date must be today or a future date.',
+            'time.required' => 'The time field is required.',
+            'venue_id.required' => 'The venue field is required.',
+            'venue_id.exists' => 'The selected venue does not exist.',
         ]);
 
         // Find the event by id

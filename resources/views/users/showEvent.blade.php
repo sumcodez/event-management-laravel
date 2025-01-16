@@ -5,8 +5,53 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Event Management</title>
   <link rel="stylesheet" href="{{ asset('users_styles/style.css') }}">
+
+  <style>
+    /* Toast message styles */
+    .toast {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #F44336; /* Red for error */
+        color: white;
+        padding: 15px;
+        border-radius: 5px;
+        font-size: 1rem;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+    }
+
+    .toast.success {
+        background-color: #4CAF50; /* Green for success */
+    }
+
+    .toast.show {
+        opacity: 1;
+    }
+    
+  </style>
+
 </head>
 <body>
+
+      <!-- Display success message -->
+      @if(session('success'))
+      <div id="success-toast" class="toast success">
+          {{ session('success') }}
+      </div>
+      @endif
+  
+      <!-- Display validation errors -->
+      @if ($errors->any())
+          <div id="error-toast" class="toast">
+              @foreach ($errors->all() as $error)
+                  <p>{{ $error }}</p>
+              @endforeach
+          </div>
+      @endif
+
+
   <!-- Navigation Bar -->
   <nav class="navbar" id="myTopnav">
     <div class="logo"><a href="href="{{ route('events.all') }}">Events Dashboard</a></div>
@@ -61,5 +106,34 @@
       </form>
     @endif
   </div>
+
+
+  <script>
+    // Show toast message for success
+    @if(session('success'))
+        document.addEventListener("DOMContentLoaded", function() {
+            const successToast = document.getElementById('success-toast');
+            successToast.classList.add('show');
+  
+            // Hide the success toast message after 5 seconds
+            setTimeout(function() {
+                successToast.classList.remove('show');
+            }, 5000);
+        });
+    @endif
+  
+    // Show toast message for validation errors
+    @if ($errors->any())
+        document.addEventListener("DOMContentLoaded", function() {
+            const errorToast = document.getElementById('error-toast');
+            errorToast.classList.add('show');
+  
+            // Hide the error toast message after 5 seconds
+            setTimeout(function() {
+                errorToast.classList.remove('show');
+            }, 5000);
+        });
+    @endif
+  </script>
 </body>
 </html>

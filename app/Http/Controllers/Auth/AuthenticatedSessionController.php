@@ -29,6 +29,8 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        session()->flash('success', 'Logged in successfully.');
+
         if ($request->user()->is_admin) { // Assuming is_admin is a boolean
             return redirect()->route('admin.dashboard'); // Use named route
         }

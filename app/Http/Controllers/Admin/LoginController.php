@@ -42,17 +42,18 @@ class LoginController extends Controller
             if (!$user->is_admin) {
                 Auth::logout(); // Log out the user if they are not an admin
                 return back()->withErrors([
-                    'email' => 'You do not have access to the admin dashboard.',
+                    'errors' => 'You do not have access to the admin dashboard.',
                 ]);
             }
 
             // Regenerate session and redirect to the admin dashboard
             $request->session()->regenerate();
+            session()->flash('success', 'Logged in successfully as admin.');
             return redirect()->route('admin.dashboard');
         }
 
         return back()->withErrors([
-            'email' => 'The provided credentials are incorrect.',
+            'errors' => 'The provided credentials are incorrect.',
         ]);
     }
 
