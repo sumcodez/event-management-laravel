@@ -107,6 +107,10 @@ class EventController extends Controller
 
     public function allEvents_user(Request $request)
     {
+
+        $user = Auth::user();
+
+
         // Get the search and filter parameters from the request
         $search = $request->input('title');
         $venueFilter = $request->input('venue');
@@ -128,12 +132,14 @@ class EventController extends Controller
         // Get all venues for the filter dropdown
         $venues = Venue::all();
     
-        return view('users.events', compact('events', 'venues', 'search', 'venueFilter', 'dateFilter'));
+        return view('users.events', compact('events', 'venues', 'search', 'venueFilter', 'dateFilter', 'user'));
     }
 
 
     public function showRegisteredEvents()
     {
+        $user = Auth::user();
+
         // Get the logged-in user's ID
         $userId = auth()->user()->id;
     
@@ -144,6 +150,6 @@ class EventController extends Controller
             ->where('attendees.user_id', $userId)
             ->get(['events.*', 'venues.name as venue_title', 'venues.location as venue_location', 'venues.capacity as venue_capacity']); // Fetch venue details as well
     
-        return view('users.registered', compact('registeredEvents'));
+        return view('users.registered', compact('registeredEvents', 'user'));
     }
 }

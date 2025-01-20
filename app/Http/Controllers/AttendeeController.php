@@ -13,6 +13,9 @@ class AttendeeController extends Controller
 {
     public function register(Request $request, $event_id)
     {
+
+        $user = Auth::user();
+
         // Fetch the event and associated venue
         $event = Event::findOrFail($event_id);
     
@@ -50,6 +53,8 @@ class AttendeeController extends Controller
 
     public function show($event_id)
     {
+        $user = Auth::user();
+
         $event = Event::findOrFail($event_id); // Retrieve the event by ID
         $venue = Venue::find($event->venue_id); // Find the venue using the event's venue_id
 
@@ -58,6 +63,6 @@ class AttendeeController extends Controller
         ->where('event_id', $event_id)
         ->exists();
     
-        return view('users.showEvent', compact('event', 'venue', 'isRegistered')); // Pass both event and venue to the view
+        return view('users.showEvent', compact('event', 'venue', 'isRegistered', 'user')); // Pass both event and venue to the view
     }
 }

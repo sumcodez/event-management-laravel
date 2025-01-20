@@ -20,7 +20,7 @@ use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('home.home');
-});
+})->name('home.page');
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
@@ -49,6 +49,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [UserController::class, 'edit'])->name('profile.manage');
 
     Route::post('/profile/update', [UserController::class, 'update'])->name('profile.update');
+
+    Route::post('/profile/pic_update', [UserController::class, 'update_profile_pic'])->name('profile.update_pic');
+
+    Route::get('/profile/deactivate', [UserController::class, 'deactivate_user'])->name('profile.deactivate');
 
 });
 

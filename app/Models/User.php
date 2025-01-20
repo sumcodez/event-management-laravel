@@ -22,7 +22,9 @@ class User extends Authenticatable
         'last_name',
         'email',
         'password',
-        'is_admin'
+        'is_admin',
+        'profile_picture',
+        'status'
     ];
 
     /**
@@ -42,5 +44,6 @@ class User extends Authenticatable
      */
     protected $casts = [
         'is_admin' => 'boolean',
+        'status' => 'integer'
     ];
 }

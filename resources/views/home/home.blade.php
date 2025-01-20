@@ -38,76 +38,10 @@
             margin-left: 40px;
         }
 
-        .navbar .menu {
-            display: flex;
-            gap: 20px;
-            margin-left: auto;
+        .navbar .datetime {
             margin-right: 40px;
-        }
-
-        .navbar a {
-            text-decoration: none;
-            color: #c9d1d9;
             font-size: 16px;
-            padding: 8px 15px;
-            border: 1px solid transparent;
-            border-radius: 5px;
-            transition: all 0.3s;
-            border: 1px solid #c9d1d9;
-        }
-
-        .navbar a:hover {
-            background-color: #c9d1d9;
-            color: #0d1117;
-            border: 1px solid #c9d1d9;
-        }
-
-        .navbar .hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-            margin-left: auto;
-        }
-
-        .navbar .hamburger div {
-            width: 25px;
-            height: 3px;
-            background-color: #c9d1d9;
-        }
-
-        .menu.active {
-            display: flex;
-            flex-direction: column;
-            background-color: #161b22;
-            position: absolute;
-            top: 50px;
-            right: 20px;
-            width: 150px;
-            border: 1px solid #c9d1d9;
-            border-radius: 5px;
-            padding: 10px;
-        }
-
-        .subtext {
-            font-size: 1rem;
             color: #8b949e;
-            margin-top: 10px;
-        }
-
-
-        @media (max-width: 768px) {
-            .navbar .menu {
-                display: none;
-            }
-
-            .menu.active {
-                display: flex;
-            }
-
-            .navbar .hamburger {
-                display: flex;
-            }
         }
 
         .content {
@@ -135,12 +69,12 @@
             transition: all 0.3s;
         }
 
-        .content .buttons button a{
+        .content .buttons button a {
             text-decoration: none;
             color: #c9d1d9;
         }
 
-        .content .buttons button a:hover{
+        .content .buttons button a:hover {
             color: #0d1117;
         }
 
@@ -148,36 +82,96 @@
             background-color: #c9d1d9;
             color: #0d1117;
         }
+
+        .footer {
+            position: absolute;
+            bottom: 10px;
+            right: 20px;
+            font-size: 20px;
+            color: #8b949e;
+        }
+
+
+    /* toast message */
+    .toast {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #F44336; /* Red for error */
+        color: white;
+        padding: 15px;
+        border-radius: 5px;
+        font-size: 1rem;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+    }
+
+    .toast.success {
+        background-color: #4CAF50; /* Green for success */
+    }
+
+    .toast.show {
+        opacity: 1;
+    }
     </style>
 </head>
 <body>
+
+
+            <!-- Display success message -->
+            @if(session('success'))
+            <div id="success-toast" class="toast success">
+                {{ session('success') }}
+            </div>
+            @endif
+        
+            <!-- Display validation errors -->
+            @if ($errors->any())
+                <div id="error-toast" class="toast">
+                    @foreach ($errors->all() as $error)
+                        <p>{{ $error }}</p>
+                    @endforeach
+                </div>
+            @endif
+
+
     <div class="navbar">
         <div class="app-name">Event Management System</div>
-        <div class="hamburger" onclick="toggleMenu()">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-        <div class="menu">
-            <a href="{{ route('login') }}">Login</a>
-            <a href="{{ route('register') }}">Sign Up</a>
-        </div>
+        <div class="datetime" id="datetime"></div>
     </div>
 
     <div class="content">
         <h1>Event Management System</h1>
-        <p class="subtext">Prod by BitPastel</p>
         <div class="buttons">
             <a href="{{ route('login') }}"><button>Get Started</button></a>
             <a href="{{ route('register') }}"><button>Sign Up</button></a>
         </div>
     </div>
 
+    <div class="footer">Developed by @Bitpastel</div>
+
     <script>
-        function toggleMenu() {
-            const menu = document.querySelector('.menu');
-            menu.classList.toggle('active');
+        function updateDateTime() {
+            const datetimeElement = document.getElementById('datetime');
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric', 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit' 
+            };
+            datetimeElement.textContent = now.toLocaleDateString('en-US', options);
         }
+
+        // Update the date and time every second
+        setInterval(updateDateTime, 1000);
+
+        // Initialize the date and time
+        updateDateTime();
     </script>
 </body>
 </html>
